@@ -5,7 +5,8 @@
   "main": "app.js",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "test": "mocha **/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,6 @@
     "express": "~4.15.2",
     "jade": "*",
     "morgan": "~1.8.1",
-    "nodemon": "^1.11.0",
     "serve-favicon": "~2.4.2"
   },
   "devDependencies": {
@@ -33,6 +33,7 @@
     "eslint-config-airbnb-base": "^11.3.1",
     "eslint-plugin-import": "^2.7.0",
     "mocha": "*",
+    "nodemon": "*",
     "sinon": "*"
   }
 }
