@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import Button from './sharedPresentational/SharedButton';
-import InputField from './sharedPresentational/SharedInputField';
 import NavBar from './sharedPresentational/SharedNavBar';
 import Picture from './sharedPresentational/SharedPicture';
-import './App.css';
 
-class App extends Component {
+class SplashPage extends Component {
   render() {
     return (
       <div className="App">
@@ -20,10 +18,11 @@ class App extends Component {
           label="Test title"
           placeholder="test placeholder"
         />
-        <Picture source="https://australianmuseum.net.au/uploads/images/1955/barramundi%20cod%20477-6_medium.jpg" alt="this is a fish"/>
+        {/*
+        <Picture /> */}
       </div>
     );
   }
 }
 
-export default App;
+export default SplashPage;

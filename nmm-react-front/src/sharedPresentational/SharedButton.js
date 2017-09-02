@@ -5,9 +5,9 @@ import styled from 'styled-components';
 const Button = styled.button`
   border: 1px solid #e1a904;
   border-radius: .28571429rem;
-  min-height: 1em;
   color: #fff;
   background-color: #fbbd08;
+  min-height: 1em;
   font-size: 1rem;
   padding: .78571429em 1.5em .78571429em;
   font-family: 'Lato','Helvetica Neue', 'Arial', 'Helvetica', sans-serif;
@@ -18,11 +18,9 @@ const Button = styled.button`
 `;
 
 const SharedButton = (props) => (
-  <div>
-    <Button>
-      {props.title}
-    </Button>
-  </div>
+  <Button >
+    {props.title}
+  </Button>
 )
 
 SharedButton.propTypes = {
