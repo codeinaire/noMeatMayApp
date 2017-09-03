@@ -25,6 +25,7 @@
     "express": "~4.15.2",
     "jade": "*",
     "morgan": "~1.8.1",
+    "react-router-dom": "^4.2.2",
     "serve-favicon": "~2.4.2",
     "styled-components": "^2.1.2"
   },

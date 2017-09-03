@@ -4,10 +4,11 @@ import LinkedButton from './SharedButton';
 
 const StyledNav = styled.nav`
   background-color: #646fe2;
-  display: block;
+  width: 100%;
   padding: 1em 1em;
   display: flex;
   justify-content: space-between;
+  order: 0;
 `
 
 const SharedNavBar = () => (
