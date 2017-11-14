@@ -109,11 +109,22 @@ Help with getting it running: https://stackoverflow.com/questions/37096517/mongo
 
 # EXPRESS ARCHITECTURE
 
-- Using a loop mechanism to initialise controllers: https://medium.com/@faisalabid/node-js-and-express-architecture-edf6a254d930
+- [Using a loop mechanism to initialise controllers](https://medium.com/@faisalabid/node-js-and-express-architecture-edf6a254d930)
 
-# OTHER ARCHITECTURE
+- [Express.js - how to structure application](https://stackoverflow.com/questions/5778245/expressjs-how-to-structure-an-application)
+  - Middleware
+    1. Any application wide middleware.
+    2. All routes and assorted route middleware.
+    3. Error handlers.
 
-- [MOVE](http://cirw.in/blog/time-to-move-on.html)
+# EXPORTS & MODULE.EXPORTS
+
+- https://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js
+- http://www.hacksparrow.com/node-js-exports-vs-module-exports.html
+   - module.exports has a higher priority over exports.
+
+# NODE ES6
+- Basically node.js [doesn't natively support ES6 syntax](https://stackoverflow.com/questions/30878363/import-es6-for-node), we have to install another package to use this.
 
 # ERRORS
 
@@ -123,3 +134,7 @@ Help with getting it running: https://stackoverflow.com/questions/37096517/mongo
 # GLOSSARY
 
 - λ - this is the 11th letter of the Greek alphabet. It is called lambda.
+
+- [MOVE](http://cirw.in/blog/time-to-move-on.html) - a type of architecture for software similar to Model View Controller but instead has Models Operations Views and Events.
+
+- [SPA](https://en.wikipedia.org/wiki/Single-page_application) - an website or web application that dynamically reloads content on one page instead of loading new pages for different content. All the required code is load on first load and no page reload happens.
