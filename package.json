@@ -23,19 +23,18 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
     "express": "~4.15.2",
-    "jade": "*",
-    "morgan": "~1.8.1",
-    "react-router-dom": "^4.2.2",
-    "serve-favicon": "~2.4.2",
-    "styled-components": "^2.1.2"
+    "express-graphql": "^0.6.11",
+    "graphql": "^0.11.7",
+    "mongodb": "^2.2.33",
+    "morgan": "~1.8.1"
   },
   "devDependencies": {
     "chai": "*",
-    "eslint": "^4.5.0",
+    "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^11.3.1",
     "eslint-plugin-import": "^2.7.0",
     "mocha": "*",
     "nodemon": "*",
-    "sinon": "*"
+    "sinon": "^4.1.2"
   }
 }
