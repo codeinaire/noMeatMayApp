@@ -1,6 +1,11 @@
 # Server - No Meat May App
 
-[GrapQL](https://github.com/graphql/graphql-js)
+[GraphQl github Proper](https://github.com/facebook/graphql)
+
+[GraphQl Facebook](https://github.com/facebook/graphql)
+[GraphQl Spec](http://facebook.github.io/graphql/October2016/#sec-Language.Query-Document) - this is mainly for developers who want to build tools that help with using GraphQl.
+
+[GrapQL-js](https://github.com/graphql/graphql-js)
 
 [GraphQL tools by Apollo](https://github.com/apollographql/graphql-tools)
 

@@ -36,8 +36,8 @@ TEST WATCHING
 ## GRAPHQL Vs REST
 ### REST
 - 1) Stateless servers (every request in a brand new request even if  it's a request that will seem to create a continat) and structure access to resources.
-- 2) It's a strict specification for what the tochnologiy can bo bet spread widely.
-- 3) Ever changing front-end doesn't go well with the static nture of the traditional AP system.
+- 2) It's a strict specification for what the technologiy can bo bet spread widely.
+- 3) Ever changing front-end doesn't go well with the static nature of the traditional AP system.
 EXAMPLE - Blog App
 3 endpoints
 - /user/<id>
@@ -46,6 +46,19 @@ EXAMPLE - Blog App
 There will be 3 different req/res cycles to get data for the user id, posts, and followers. This brings back redundant data (all the data in the user object, posts object, and followers object) and, if the api is customised takes time to recustomise it.
 
 ### GRAPHQL
+Design principles:
+- Hierarchical - Many web connected products involve creating and manipulating hierarchies. GraphQl is structured similarly to the data it returns.
+- Product-centric - Driven by the requirements of front-end engineers.
+- Strong-typing - Every graphQL server defines an application-specific type system with queries executed in the context of that system. This allows validation before execution of query.
+- Client-specified queries - The type system informs the client what it can consume from the server and makes the client responsible for choosing how to consume the data. This is unlike other apis in which the server determines what can be returned in the form of it's various static endpoints.
+- Introspective - A graphQl server's type system can be queried by the language itself.
+
+It consists of:
+- Type system
+- Query language and execution semantics
+- Static validation
+- Type introspection
+
 There is only 1 API endpoint. A req has a query will all the data required for that screen such as
 REQ
   ```
@@ -96,6 +109,13 @@ This can simply be extracted into the page.
 
 #### CORE CONCEPTS
 Schema Definition Language (SDL) - this is the syntax of graphQL used to define the API end point which is a GraphQL Schema, otherwise known as Interface Definition Language or Schema Definition Language. Schema's most important aspects are the _fields_ and _types_. A schema is a collection of types but there are root types (query, mutation, subscription) that define the entry point for the API.
+
+- Type System - the heart of any graphQl implementation is the type system: a description of what types of objects can be returned.
+  - In the type system shorthand for non-null is "!".
+    - It is possible to return null because any graphQl implementation can interact with many different services that may not be available.
+    - This also allows us to return errors messages if there is a null returned.
+  - Interface type - This is a list of fields, a type that acts as a connection between two separate types in GraphQl. In the Star Wars example the interface type between Human and Droid was 'Character', this contained fields common to both.
+- Query -
 
 # DATABASE - MONGODB
 

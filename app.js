@@ -11,10 +11,6 @@ const users = require('./routes/users');
 
 const app = express();
 
-const root = {
-  hello: () => 'Hello world!',
-};
-
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,7 +21,6 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/graphql', graphqlHTTP({
   schema,
-  rootValue: root,
   graphiql: true,
 }));
 
