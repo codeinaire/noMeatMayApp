@@ -3,19 +3,21 @@ const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const graphqlHTTP = require('express-graphql'); // ?
+const graphqlHTTP = require('express-graphql');
 const schema = require('./graphQl/schema/schema');
-
+const cors = require('cors');
 const index = require('./routes/index');
 const users = require('./routes/users');
 
 const app = express();
-
+// TODO - check later if this is safe, may need to configure for specific routes instead of all routes
+app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use('/', index);
 app.use('/users', users);

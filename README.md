@@ -30,3 +30,5 @@
 [Morgan](https://www.npmjs.com/package/morgan) - middleware for logging HTTP requests.
 
 [MongoDB](https://github.com/mongodb/node-mongodb-native) - Offical MongoDB driver for Node.js, providing a high-level API on top ,of mongodb-core.
+
+- [Cors](https://www.npmjs.com/package/cors) - choose which routes to enable cors.

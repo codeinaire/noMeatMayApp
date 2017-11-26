@@ -6,6 +6,7 @@ const {
   GraphQLSchema,
   GraphQLString,
 } = require('graphql');
+const Resolvers = require('../resolvers/resolvers');
 /**
  * Shorthand
  *
@@ -50,15 +51,7 @@ const QueryType = new GraphQLObjectType({
     user: {
       description: 'Will return a user type.',
       type: UserType,
-      args: {
-        id: { type: GraphQLID },
-      },
-      resolve: () => ({
-        id: 0,
-        name: 'John Stewart',
-        username: 'whatever',
-        password: 'heyyeah',
-      }),
+      resolve: Resolvers.user,
     },
   }),
 });
