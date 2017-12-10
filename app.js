@@ -1,17 +1,21 @@
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const graphqlHTTP = require('express-graphql');
 const schema = require('./graphQl/schema/schema');
-const cors = require('cors');
+const connectMongo = require('./database/mongoConnector');
+
 const index = require('./routes/index');
 const users = require('./routes/users');
 
+const mongo = connectMongo();
 const app = express();
-// TODO - check later if this is safe, may need to configure for specific routes instead of all routes
-app.use(cors());
+// TODO - CORS: check later if this is safe, may need to configure for specific routes instead of all routes
+
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,7 +25,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/graphql', graphqlHTTP({
+// need to fix the mongo db connector
+app.use('/graphql', cors(), graphqlHTTP({
+  context: { mongo },
   schema,
   graphiql: true,
 }));

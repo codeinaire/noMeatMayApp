@@ -35,6 +35,7 @@ const UserType = new GraphQLObjectType({
     username: {
       type: GraphQLString,
       description: 'The username to login and identification in application.',
+      resolve: obj => obj.username
     },
     password: {
       type: GraphQLString,
@@ -56,7 +57,28 @@ const QueryType = new GraphQLObjectType({
   }),
 });
 
+const MutationType = new GraphQLObjectType({
+  name: 'Mutation',
+  description: 'All the mutations available to use on this schema.',
+
+  fields: () => ({
+    submitSignupDetails: {
+      type: UserType,
+      args: {
+        username: { type: GraphQLString }
+      },
+      resolve: (root, args, context) => {
+        // console.log('this is root', root);
+        console.log('this is args', args);
+        // console.log('this is context', context);
+        const whatever = Resolvers.user(args);
+        return whatever;
+      }
+     }
+  })
+})
 
 module.exports = new GraphQLSchema({
   query: QueryType,
+  mutation: MutationType,
 });

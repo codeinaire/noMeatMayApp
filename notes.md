@@ -143,6 +143,10 @@ Help with getting it running: https://stackoverflow.com/questions/37096517/mongo
 - http://www.hacksparrow.com/node-js-exports-vs-module-exports.html
    - module.exports has a higher priority over exports.
 
+# SECURITY
+
+- [Secure JS Applications](https://www.youtube.com/watch?v=BeKMbTSm7x8)
+
 # NODE ES6
 - Basically node.js [doesn't natively support ES6 syntax](https://stackoverflow.com/questions/30878363/import-es6-for-node), we have to install another package to use this.
 
