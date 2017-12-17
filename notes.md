@@ -126,6 +126,7 @@ Help with getting it running: https://stackoverflow.com/questions/37096517/mongo
   - START: sudo service mongodb start
   - STOP: sudo service mongodb stop
   - STATUS: sudo service mongodb status
+  - This is how to check out the log: `/var/log/mongodb/mongod.log`, I opened it up it nano
 
 # EXPRESS ARCHITECTURE
 
@@ -153,6 +154,10 @@ Help with getting it running: https://stackoverflow.com/questions/37096517/mongo
 # ERRORS
 
 ### NPM - cannot read property of undefined: [Solution](https://github.com/npm/npm/issues/18042)
+
+### ESLint - it'd want to use the eslint-jest plugin. SOLUTION was to move it outside of the same folder in which the react folder was in.
+
+### CONNECTING TO DB - I was having trouble with connecting to the database. It was basically because I didn't know how to use Promises. SOLUTION - MDN [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then) docs helped. Now I'm having a problem returning the value back to the grapiql.
 
 
 # GLOSSARY

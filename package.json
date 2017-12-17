@@ -1,6 +1,9 @@
 {
   "name": "nmmexpressserver",
   "version": "0.0.0",
+  "engines": {
+    "node": ">=8.7"
+  },
   "description": "A server for the No Meat May application.",
   "main": "app.js",
   "private": true,
@@ -31,8 +34,12 @@
   },
   "devDependencies": {
     "chai": "*",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
     "mocha": "*",
-    "nodemon": "^1.12.5",
+    "nodemon": "^1.13.3",
     "sinon": "^4.1.3"
   }
 }

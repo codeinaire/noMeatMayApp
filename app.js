@@ -12,6 +12,7 @@ const index = require('./routes/index');
 const users = require('./routes/users');
 
 const mongo = connectMongo();
+console.log('mongo in app', mongo);
 const app = express();
 // TODO - CORS: check later if this is safe, may need to configure for specific routes instead of all routes
 
@@ -22,11 +23,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+cors();
 app.use('/', index);
 app.use('/users', users);
 // need to fix the mongo db connector
-app.use('/graphql', cors(), graphqlHTTP({
+app.use('/graphql', graphqlHTTP({
   context: { mongo },
   schema,
   graphiql: true,
