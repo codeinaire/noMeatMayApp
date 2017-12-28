@@ -1,23 +1,31 @@
+const {ObjectID} =  require('mongodb');
+
 module.exports = {
-  user: (args, { mongo }) => {
-    // console.log('context', mongo);
-    const returnedPromise = mongo.then((result) => {
-        // console.log('users collection', result);
-        return result.insert(args).then((data) => {
-          console.log('this is in second .then', data);
-          console.log('this is username', data.ops[0].username);
-          return data.ops[0].username;
-        })
-      }
-    ).catch(err =>{
-      console.log('error state#####', err);
-    }).then((result) => {
-      console.log('im called regardless', result);
-      return result;
-    });
-    // const response = await context.Users;
-    // console.log('inside resolvers',args);
-    console.log('returnedPromise', returnedPromise);
-    return returnedPromise;
+  user: async (args, mongo) => {
+    // this is not sending an error message
+    console.log('aoeuaoe', mongo);
+    const users = await mongo;
+    const Users = users.Users;
+    const value = await Users.insert(args);
+    console.log('value', value.ops[0].username);
+    return value.ops[0].username;
+    // return await mongo.then((result) => {
+    //     console.log('users collection', result);
+    //     const destructured = result.Users;
+    //     const value = destructured.insert(args);
+    //     console.log('value from db insert', destructured);
+    //     return value;
+    //   }
+    // ).catch(err => {
+    //   console.log('error state#####', err);
+    // })
+  },
+  userFind: async (args, mongo) => {
+    console.log('args', args);
+    const users = await mongo;
+    const Users = users.Users;
+    const value = await Users.findOne(ObjectID(args.id));
+    console.log('this is userFind value', value);
+    return value.username;
   }
 };

@@ -117,6 +117,9 @@ Schema Definition Language (SDL) - this is the syntax of graphQL used to define 
   - Interface type - This is a list of fields, a type that acts as a connection between two separate types in GraphQl. In the Star Wars example the interface type between Human and Droid was 'Character', this contained fields common to both.
 - Query -
 
+### PRACTICAL NOTES
+- The GraphQL executor accepts promises. It's okay for a RESOLVER to return a promise. If it is successfully the promise-resolved value for that query field will be returned or it'll be rejected with an error message.
+
 # DATABASE - MONGODB
 
 Help with getting it running: https://stackoverflow.com/questions/37096517/mongodb-error-how-can-i-solve-the-erro-in-mongodb

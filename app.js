@@ -23,11 +23,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-cors();
 app.use('/', index);
 app.use('/users', users);
-// need to fix the mongo db connector
-app.use('/graphql', graphqlHTTP({
+// TODO - need to fix the mongo db connector to show errors
+// TODO - look into how to close the db Loc 752
+app.use('/graphql', cors(), graphqlHTTP({
   context: { mongo },
   schema,
   graphiql: true,

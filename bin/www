@@ -1,12 +1,10 @@
-#!/usr/bin/env node
-
 /**
  * Module dependencies.
  */
 
 const app = require('../app');
 const debug = require('debug')('nmmexpressserver:server');
-const http = require('http');
+const { createServer } = require('http');
 
 /**
  * Normalize a port into a number, string, or false.
@@ -31,7 +29,6 @@ function normalizePort(val) {
 /**
  * Get port from environment and store in Express.
  */
-
 const port = normalizePort(process.env.PORT || '3001');
 app.set('port', port);
 
@@ -67,8 +64,7 @@ function onError(error) {
  * Create HTTP server.
  */
 
-const server = http.createServer(app);
-
+const server = createServer(app);
 
 /**
  * Event listener for HTTP server "listening" event.
