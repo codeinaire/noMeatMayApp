@@ -26,22 +26,30 @@ const UserType = new GraphQLObjectType({
   description: 'This is created when a user signs up. It is used to login and represent them on the service.',
 
   fields: () => ({
-    // id: {
-    //   type: GraphQLID,
-    //   description: 'This is the id of the user created by the database.',
-    // },
-    // name: {
-    //   type: GraphQLString,
-    //   description: 'The first and last name of the user.',
-    // },
+    id: {
+      type: GraphQLID,
+      description: 'This is the id of the user created by the database.',
+    },
+    name: {
+      type: GraphQLString,
+      description: 'The first and last name of the user.',
+    },
     username: {
       type: GraphQLString,
       description: 'The username to login and identification in application.',
     },
-    // password: {
-    //   type: GraphQLString,
-    //   description: 'The password used with the username to login. Must be encrypted and perhaps may have to abstract this to another function',
-    // },
+    email: {
+      type: GraphQLString,
+      description: 'The email the user will user to sign up to the service.'
+    },
+    password: {
+      type: GraphQLString,
+      description: 'The password used with the username to login. Must be encrypted and perhaps may have to abstract this to another function',
+    },
+    motivation: {
+      type: GraphQLString,
+      description: 'The reason why they are joining the no meat may campaign',
+    },
   }),
 });
 
@@ -49,7 +57,7 @@ const QueryType = new GraphQLObjectType({
   name: 'RootQuery',
   description: 'All the queries available to use on this schema.',
 
-  fields: {
+  fields: () => ({
     username: {
       description: 'Will return a user type.',
       type: GraphQLString,
@@ -78,14 +86,14 @@ const QueryType = new GraphQLObjectType({
         //   return err;
         // })
     },
-  },
+  }),
 });
 
 const MutationType = new GraphQLObjectType({
   name: 'Mutations',
   description: 'All the mutations available to use on this schema.',
 
-  fields: {
+  fields: () => ({
     submitSignupDetails: {
       type: UserType,
       args: {
@@ -93,11 +101,11 @@ const MutationType = new GraphQLObjectType({
           type: new GraphQLNonNull(GraphQLString),
         }
       },
-      resolve: (root, args, { mongo }) => {
+      resolve(root, args, { mongo }) {
         console.log('context in resolver', mongo);
         return Resolvers.user(args, mongo)},
       }
-  }
+  })
 })
 
 module.exports = new GraphQLSchema({
