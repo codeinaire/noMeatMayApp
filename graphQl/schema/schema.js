@@ -30,9 +30,13 @@ const UserType = new GraphQLObjectType({
       type: GraphQLID,
       description: 'This is the id of the user created by the database.',
     },
-    name: {
+    firstname: {
       type: GraphQLString,
-      description: 'The first and last name of the user.',
+      description: 'The first name of the user.',
+    },
+    lastname: {
+      type: GraphQLString,
+      description: 'The last name of the user.',
     },
     username: {
       type: GraphQLString,
@@ -98,6 +102,21 @@ const MutationType = new GraphQLObjectType({
       type: UserType,
       args: {
         username: {
+          type: new GraphQLNonNull(GraphQLString),
+        },
+        firstname: {
+          type: new GraphQLNonNull(GraphQLString),
+        },
+        lastname: {
+          type: new GraphQLNonNull(GraphQLString),
+        },
+        email: {
+          type: new GraphQLNonNull(GraphQLString),
+        },
+        password: {
+          type: new GraphQLNonNull(GraphQLString),
+        },
+        motivation: {
           type: new GraphQLNonNull(GraphQLString),
         }
       },

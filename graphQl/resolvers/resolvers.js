@@ -13,7 +13,7 @@ module.exports = {
       console.error(`An error occurred: ${error}`);
     }
     console.log('value', value.ops[0].username);
-    return { username: value.ops[0].username,};
+    return { username: value.ops[0].username };
     // return mongo.then((result) => {
     //     console.log('users collection', result);
     //

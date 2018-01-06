@@ -120,6 +120,10 @@ Schema Definition Language (SDL) - this is the syntax of graphQL used to define 
 ### PRACTICAL NOTES
 - The GraphQL executor accepts promises. It's okay for a RESOLVER to return a promise. If it is successfully the promise-resolved value for that query field will be returned or it'll be rejected with an error message.
 
+# ASYNC FUNCTIONALITY
+
+- [A good article on how to use async/await](https://tutorialzine.com/2017/07/javascript-async-await-explained)
+
 # DATABASE - MONGODB
 
 Help with getting it running: https://stackoverflow.com/questions/37096517/mongodb-error-how-can-i-solve-the-erro-in-mongodb
@@ -152,7 +156,7 @@ Help with getting it running: https://stackoverflow.com/questions/37096517/mongo
 - [Secure JS Applications](https://www.youtube.com/watch?v=BeKMbTSm7x8)
 
 # NODE ES6
-- Basically node.js [doesn't natively support ES6 syntax](https://stackoverflow.com/questions/30878363/import-es6-for-node), we have to install another package to use this.
+- Basically node.js [doesn't natively support ES6 syntax](https://stackoverflow.com/questions/30878363/import-es6-for-node), we have to install another package to use this. This isn't true. I'm using node v8 and there is native support for it.
 
 # ERRORS
 
@@ -161,6 +165,8 @@ Help with getting it running: https://stackoverflow.com/questions/37096517/mongo
 ### ESLint - it'd want to use the eslint-jest plugin. SOLUTION was to move it outside of the same folder in which the react folder was in.
 
 ### CONNECTING TO DB - I was having trouble with connecting to the database. It was basically because I didn't know how to use Promises. SOLUTION - MDN [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then) docs helped. Now I'm having a problem returning the value back to the grapiql.
+
+### Returning the value of a mutation - I was having trouble returning a value of a mutation. It would always return null even if the write to the database was successful. I didn't know why. I put the return value in an object and that worked. Like so `return { username: value.ops[0].username };`.
 
 
 # GLOSSARY
