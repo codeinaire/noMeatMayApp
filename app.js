@@ -31,7 +31,7 @@ app.use('/graphql', cors(), graphqlHTTP({
   context: { mongo },
   schema,
   graphiql: true,
-}));
+}), next);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

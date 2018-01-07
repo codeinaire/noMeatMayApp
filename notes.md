@@ -117,14 +117,49 @@ Schema Definition Language (SDL) - this is the syntax of graphQL used to define 
   - Interface type - This is a list of fields, a type that acts as a connection between two separate types in GraphQl. In the Star Wars example the interface type between Human and Droid was 'Character', this contained fields common to both.
 - Query -
 
-### PRACTICAL NOTES
+# PRACTICAL NOTES
 - The GraphQL executor accepts promises. It's okay for a RESOLVER to return a promise. If it is successfully the promise-resolved value for that query field will be returned or it'll be rejected with an error message.
 
-# ASYNC FUNCTIONALITY
+## ASYNC FUNCTIONALITY
 
 - [A good article on how to use async/await](https://tutorialzine.com/2017/07/javascript-async-await-explained)
+- [Mastering Async/await Node.js](https://blog.risingstack.com/mastering-async-await-in-nodejs/) - another good article.
 
-# DATABASE - MONGODB
+## AUTHENTICATION
+
+Apparently, there is no complete authentication solution for the node.js ecosystem like there is for rails with Devise. I miss Devise. It was so easy to get it up and running. I read [this article](https://hackernoon.com/your-node-js-authentication-tutorial-is-wrong-f1a3bf831a46) about authentication and how most tutorials were getting it wrong. This is a bummer. It was written in Aug 2017, pretty recently, and they hadn't found a robust, all-in-one auth solution like Devise at that point in time.
+
+I found a potential candidate: [ooth](https://github.com/nmaro/ooth). An [article](https://medium.com/the-ideal-system/ooth-user-accounts-for-node-js-93cfcd28ed1a) written by the creator lead me to it. However, I wouldn't want to put it into a production application because it is still very new, and he is the only contributor.
+
+Recent tutorial on authentication with node: [scotch-io](https://github.com/scotch-io/easy-node-authentication)
+
+The contenders for authentication are:
+
+- [passport](http://www.passportjs.org/) - This, however, isn't a complete solution. It only provides the authentication of the user. Does it store sessions?? It would also need:
+  - Rate limiting: [express-brute](https://github.com/AdamPflug/express-brute) to prevent slowing down of server by multiple password requests from the same IP address.
+  - API token mechanism: [JWT](https://jwt.io/introduction/) - this could be used for sessions because each subsequent request will include the JWT and once it doesn't include that or the correct one then the session will expire. A button can be created to delete that JWT therefore cancelling the session. EXCEPT it uses cookie tokens.
+    - ATTRIBUTES:
+      - Stateless - the user state is never stored in server memory.
+      - Local - the JWT is stored locally.
+  - Encryption - the PW needs to be adequately encrypted and decrypt. Use [bcrypt](https://www.npmjs.com/package/bcrypt)
+  - Sessions - [express-sessions](https://github.com/expressjs/session)
+  - Confirmation - of sign-up via email.
+  - Recoverable - of password via email. Here's a tutorial for it: [Password Reset](https://www.codementor.io/olatundegaruba/password-reset-using-jwt-ag2pmlck0). This token should time out after certain period of time.
+  - Registrable - of the account. I already have this feature with the graphQL stuff.
+  - Rememberable - life-cycle of user using the application. Times out after certain period of time.
+  - Trackable? - sign in count, timestamp, IP address.
+  - Lockable? - freeze account after certain number of failed sign-ins.
+  - Validateable - validate email and password.
+- [feathers/authentication](https://github.com/feathersjs/authentication) - it looks kind of like an extension of express, but allows for adding different services on top of it. I'm not sure how that would work with graphQL or on top of anything else I want to build into the app.
+
+Authentication as a service
+- [Auth0](https://auth0.com/) - this could be a good service to use. There's a free level and an Open Source program level.
+- [Firebase Auth](https://firebase.google.com/products/auth/) - this is a google product and there is a free level. Might be better to use this than Auth0.
+
+Other
+- [OAuth](https://oauth.net/code/)- OAuth allows notifying a resource provider (e.g. Facebook) that the resource owner (e.g. you) grants permission to a third-party (e.g. a Facebook Application) access to their information (e.g. the list of your friends).
+
+## DATABASE - MONGODB
 
 Help with getting it running: https://stackoverflow.com/questions/37096517/mongodb-error-how-can-i-solve-the-erro-in-mongodb
 
@@ -134,6 +169,14 @@ Help with getting it running: https://stackoverflow.com/questions/37096517/mongo
   - STOP: sudo service mongodb stop
   - STATUS: sudo service mongodb status
   - This is how to check out the log: `/var/log/mongodb/mongod.log`, I opened it up it nano
+
+- MONGOD - To be able to use the command `$ mongod` I had to create a folder in the root dir called `/data/db`. When I used `$ mongod` I accessed the databases in that folder instead of using the commands above. Actually, I have to use the commands above to stop the mongodb process from running otherwise I wouldn't be able to use the command here.
+
+- MONGO - The command to run the CLI for mongoDB is `$ mongo`. There are a few good commands to use to explore databases in the CLI. They are:
+  - `> show dbs`
+  - `> use <db name>` - this will switch the CLI to use whatever db stated.
+  - `> db.getCollection('users').find({ <key>: <value> })` - to find an item.
+    - I don't know why but I'm unable to use this: `> db.localDev.find({ <key>: <value> })`
 
 # EXPRESS ARCHITECTURE
 

@@ -62,9 +62,9 @@ const QueryType = new GraphQLObjectType({
   description: 'All the queries available to use on this schema.',
 
   fields: () => ({
-    username: {
+    userFind: {
       description: 'Will return a user type.',
-      type: GraphQLString,
+      type: UserType,
       args: {
         id: {
           type: new GraphQLNonNull(GraphQLString),
@@ -120,9 +120,8 @@ const MutationType = new GraphQLObjectType({
           type: new GraphQLNonNull(GraphQLString),
         }
       },
-      resolve(root, args, { mongo }) {
-        console.log('context in resolver', mongo);
-        return Resolvers.user(args, mongo)},
+      resolve: (root, args, { mongo }) => {
+        return Resolvers.userSignUp(args, mongo)},
       }
   })
 })
