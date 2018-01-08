@@ -143,6 +143,8 @@ The contenders for authentication are:
       - Local - the JWT is stored locally.
   - Encryption - the PW needs to be adequately encrypted and decrypt. Use [bcrypt](https://www.npmjs.com/package/bcrypt)
   - Sessions - [express-sessions](https://github.com/expressjs/session)
+    - [uudi](https://github.com/kelektiv/node-uuid) - used to produce a cryptographically secure UUID (universally unique identifier) for use as a cookie.
+    [connect-mongo](https://github.com/jdesboeufs/connect-mongo) - this is to save sessions in a mongo database.
   - Confirmation - of sign-up via email.
   - Recoverable - of password via email. Here's a tutorial for it: [Password Reset](https://www.codementor.io/olatundegaruba/password-reset-using-jwt-ag2pmlck0). This token should time out after certain period of time.
   - Registrable - of the account. I already have this feature with the graphQL stuff.
@@ -178,7 +180,7 @@ Help with getting it running: https://stackoverflow.com/questions/37096517/mongo
   - `> db.getCollection('users').find({ <key>: <value> })` - to find an item.
     - I don't know why but I'm unable to use this: `> db.localDev.find({ <key>: <value> })`
 
-# EXPRESS ARCHITECTURE
+## EXPRESS ARCHITECTURE
 
 - [Using a loop mechanism to initialise controllers](https://medium.com/@faisalabid/node-js-and-express-architecture-edf6a254d930)
 
@@ -188,18 +190,24 @@ Help with getting it running: https://stackoverflow.com/questions/37096517/mongo
     2. All routes and assorted route middleware.
     3. Error handlers.
 
-# EXPORTS & MODULE.EXPORTS
+## EXPORTS & MODULE.EXPORTS
 
 - https://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js
 - http://www.hacksparrow.com/node-js-exports-vs-module-exports.html
    - module.exports has a higher priority over exports.
 
-# SECURITY
+## MIDDLEWARE
+
+- [app.use](https://stackoverflow.com/questions/11321635/nodejs-express-what-is-app-use) - this is the node command to add a layer to the middleware functionality. It can apply to a specific route `app.use('/', index);` or it can apply to every request that comes in.
+
+## NODE ES6
+   - Basically node.js [doesn't natively support ES6 syntax](https://stackoverflow.com/questions/30878363/import-es6-for-node), we have to install another package to use this. This isn't true. I'm using node v8 and there is native support for it.
+
+
+## SECURITY
 
 - [Secure JS Applications](https://www.youtube.com/watch?v=BeKMbTSm7x8)
 
-# NODE ES6
-- Basically node.js [doesn't natively support ES6 syntax](https://stackoverflow.com/questions/30878363/import-es6-for-node), we have to install another package to use this. This isn't true. I'm using node v8 and there is native support for it.
 
 # ERRORS
 
@@ -211,6 +219,7 @@ Help with getting it running: https://stackoverflow.com/questions/37096517/mongo
 
 ### Returning the value of a mutation - I was having trouble returning a value of a mutation. It would always return null even if the write to the database was successful. I didn't know why. I put the return value in an object and that worked. Like so `return { username: value.ops[0].username };`.
 
+### Pass req & db object into graphql schema - [this](https://stackoverflow.com/questions/12518132/modifying-express-js-request-object) show how to attach any object to the req object via root.
 
 # GLOSSARY
 
@@ -219,3 +228,5 @@ Help with getting it running: https://stackoverflow.com/questions/37096517/mongo
 - [MOVE](http://cirw.in/blog/time-to-move-on.html) - a type of architecture for software similar to Model View Controller but instead has Models Operations Views and Events.
 
 - [SPA](https://en.wikipedia.org/wiki/Single-page_application) - an website or web application that dynamically reloads content on one page instead of loading new pages for different content. All the required code is load on first load and no page reload happens.
+
+- [Serialization](https://en.wikipedia.org/wiki/Serialization) - this is when a data structure is transformed into a format that can be persisted or transmitted across a network.

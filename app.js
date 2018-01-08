@@ -2,8 +2,10 @@ const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const cors = require('cors');
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const uuid = require('uuid/v4');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const graphqlHTTP = require('express-graphql');
 const schema = require('./graphQl/schema/schema');
 const connectMongo = require('./database/mongoConnector');
@@ -12,26 +14,48 @@ const index = require('./routes/index');
 const users = require('./routes/users');
 
 const mongo = connectMongo();
-console.log('mongo in app', mongo);
-const app = express();
-// TODO - CORS: check later if this is safe, may need to configure for specific routes instead of all routes
 
+const app = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use((req, res, next) => {
+  req.root = mongo;
+  next();
+});
+
+app.use(session({
+  genid: (req) => {
+    console.log('Inside the session middleware')
+    console.log(req.sessionID)
+    return uuid(); // use UUIDs for session IDs
+  },
+  secret: 'keyboard cat',
+  store: new MongoStore({
+    url: 'mongodb://localhost:27017/sessions',
+    autoRemove: 'native',
+    touchAfter: 24 * 3600
+      }),
+  resave: false,
+  saveUninitialized: true
+}))
+
 
 app.use('/', index);
 app.use('/users', users);
 // TODO - need to fix the mongo db connector to show errors
 // TODO - look into how to close the db Loc 752
-app.use('/graphql', cors(), graphqlHTTP({
-  context: { mongo },
+app.use('/graphql', cors());
+app.use('/graphql', (req, res, next) => {
+  console.log('req.sessionID', req.sessionID);
+
+  next();
+}, graphqlHTTP({
   schema,
   graphiql: true,
-}), next);
+}));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -76,8 +76,10 @@ const QueryType = new GraphQLObjectType({
     },
     userCount: {
       type: GraphQLInt,
-      resolve: async (_, args, { mongo }) => {
-        const users = await mongo;
+      resolve: async (root, args, context) => {
+        console.log('this is root', root);
+        console.log('this is args', args);
+        const users = await context.root;
         const Users = users.Users;
         return Users.count();
       }
@@ -120,8 +122,9 @@ const MutationType = new GraphQLObjectType({
           type: new GraphQLNonNull(GraphQLString),
         }
       },
-      resolve: (root, args, { mongo }) => {
-        return Resolvers.userSignUp(args, mongo)},
+      resolve: (root, args, context) => {
+        console.log('this is mongo', context.sessionID);
+        return Resolvers.userSignUp(args, context.root)},
       }
   })
 })

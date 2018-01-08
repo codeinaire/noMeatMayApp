@@ -23,23 +23,25 @@
   "homepage": "https://github.com/codeinaire/noMeatMayApp#readme",
   "dependencies": {
     "body-parser": "~1.17.1",
-    "cookie-parser": "~1.4.3",
+    "connect-mongo": "^2.0.1",
     "cors": "^2.8.4",
     "debug": "~2.6.3",
     "express": "~4.15.2",
     "express-graphql": "^0.6.11",
+    "express-session": "^1.15.6",
     "graphql": "^0.11.7",
-    "mongodb": "^2.2.33",
-    "morgan": "~1.8.1"
+    "mongodb": "^2.2.34",
+    "morgan": "~1.8.1",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
     "chai": "*",
-    "eslint": "^4.13.1",
+    "eslint": "^4.15.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^5.2.1",
-    "mocha": "*",
-    "nodemon": "^1.13.3",
+    "mocha": "^4.1.0",
+    "nodemon": "^1.14.8",
     "sinon": "^4.1.3"
   }
 }

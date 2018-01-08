@@ -3,6 +3,7 @@
 - Am I using graphql only for database relating?
 - GraphQL is my only endpoint to the node server, how do I set up sessions to the server via the client?
 - What do I have to return via GraphQL to make sure the user is authenticated and authorised to see their content?
+  - Do I have to send back the UUID??
 
 # Client side React
 
@@ -35,3 +36,4 @@
     done(null, user.id);
   });
   ```
+- How do I get the cookie to be saved in the client side application? When I use graphiQl the cookie is created upon the first request and sent back to be saved in the browser. Upon subsequent requests it is sent as the cookie header. The question is how do I get the cookie to the client application and saved in that??
