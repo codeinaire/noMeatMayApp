@@ -8,7 +8,10 @@ module.exports = async () => {
   // }).catch(err => {
   //   console.error(err);
   // });
-  const db = await MongoClient.connect(MONGO_URL)
+  const db = await MongoClient.connect(MONGO_URL, {
+    reconnectTries: Number.MAX_VALUE,
+    reconnectInterval: 1000
+  })
   console.log(`Now connected to ${db.databaseName} database`);
   return { Users: db.collection('users'), }
 }

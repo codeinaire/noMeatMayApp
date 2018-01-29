@@ -160,6 +160,33 @@ Authentication as a service
 
 Other
 - [OAuth](https://oauth.net/code/)- OAuth allows notifying a resource provider (e.g. Facebook) that the resource owner (e.g. you) grants permission to a third-party (e.g. a Facebook Application) access to their information (e.g. the list of your friends).
+- [graphql-auth](https://www.npmjs.com/package/graphql-auth) - a middleware for auth that can be used with other auth middleware like passport. Not something I wanted to use because it wasn't that clear to me as to how I would integrate Passport and I think I would've needed to install other modules. Code for it [here](https://github.com/kkemple/graphql-auth-examples)
+- [Scaphold Auth](https://scaphold.io/community/blog/authentication-in-graphql/) - an article about a top level view of authentication and an example of such using a graphql framework.
+
+### Authentication workflow
+
+Client
+1) Client - `/signin` page with `<form>username & password</form>`
+2) Client - submit > `mutation signInUser(username & password)` > node server
+Server
+3) Server -
+  - REST - `POST /signin` route
+  - GraphQL - `signIn` field
+4) Pre-configured passport strategy - this has been defined before `const app = express()` & is called from within the field or route
+  - REST - defined in MW file, but can be separated out.
+  - GraphQl - defined in the resolve function
+  - Returns `done(null, user)`.
+5) Passport.authenticate - the callback function is initiated (does that mean it returns a promise?). The user object isn't attached to the req object at this point.
+6) Serialization - `passport.serializeUser()` callback is initiated and the User Id is save here - this can come from the MongoDB ObjectID. It's saved in the session store in MongoDB.
+  - REST - defined in MW file, but can be separated out.
+  - GraphQl - defined in the resolve file.
+7) Login - `req.login()` callback is initiased and the session for this user and can be accessed on the req object. This is when something is returned. A message perhaps.
+
+### Authentication with Passport
+
+I found [this](https://github.com/jessedvrs/graphql-passport-example) great Node.js example of using GraphQL and Passport.js. I'm very relieved that I found this otherwise I think I would've used a GraphQL framework instead of the base GraphQL or I could've eventually figured it out with a lot of frustrating trial and error. This example is exactly what I was looking for. I'm learning a lot from it already by just looking at the code. I'm going to have to refactor my server code significantly. The author has broken out a bunch of the middlewares into different files and also the graphQL parts into different files. This make everything so much clearer and easier to understand. I only broke out the resolvers, but I can also break out the schema as well into queries and types. I can break that out into queries, mutations, and types.
+
+He was calling the entire folder contents itself into a module. I'm curious about this. I wonder if this is a pattern for building frameworks? When doing this he put this `export { default as CakeType } from './CakeType';` into an `index.js` file.
 
 ## DATABASE - MONGODB
 
@@ -179,6 +206,8 @@ Help with getting it running: https://stackoverflow.com/questions/37096517/mongo
   - `> use <db name>` - this will switch the CLI to use whatever db stated.
   - `> db.getCollection('users').find({ <key>: <value> })` - to find an item.
     - I don't know why but I'm unable to use this: `> db.localDev.find({ <key>: <value> })`
+
+- ERROR - I now understand what this error means: `(node:10861) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 2): MongoError: query selector must be an object`. The database gave me an error because I didn't use an object to search for a document in the collection. However, when I took away the try/catch block it spat out this error. This is because there was no error resolution for the promise that errored out. I did just get another of these warnings and then the actual error. That must've come from the graphql feedback maybe??
 
 ## EXPRESS ARCHITECTURE
 
@@ -220,6 +249,10 @@ Help with getting it running: https://stackoverflow.com/questions/37096517/mongo
 ### Returning the value of a mutation - I was having trouble returning a value of a mutation. It would always return null even if the write to the database was successful. I didn't know why. I put the return value in an object and that worked. Like so `return { username: value.ops[0].username };`.
 
 ### Pass req & db object into graphql schema - [this](https://stackoverflow.com/questions/12518132/modifying-express-js-request-object) show how to attach any object to the req object via root.
+
+### [EXPORT/IMPORT](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export) issues - when using `export default <object/function/class>`, I don't need to deconstruct it in the file. I can just import it as whatever name I want in the module I want to use it.
+
+### Passing through Username & Password to Passport - I was very confused about what to do. I eventually figured out that it had to be put into the body and didn't know how to pass it in via the graphql query from the Apollo client, however, I just had to do this: `usernameField: 'variables[username]', passwordField: 'variables[password]'`. I tried this before, but didn't do it the correct way. I did `variables.username`, obvious not right.
 
 # GLOSSARY
 

@@ -1,61 +1,66 @@
 const express = require('express');
-const path = require('path');
 const logger = require('morgan');
+const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const uuid = require('uuid/v4');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const graphqlHTTP = require('express-graphql');
-const schema = require('./graphQl/schema/schema');
+const authMiddleware = require('./middlewares/authentication');
+const graphqlMiddleware = require('./middlewares/graphql');
 const connectMongo = require('./database/mongoConnector');
 
-const index = require('./routes/index');
-const users = require('./routes/users');
-
 const mongo = connectMongo();
-
 const app = express();
-
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use((req, res, next) => {
-  req.root = mongo;
+// Add mongo connector to req object to make req & connector available in graphQl middleware
+app.use(async (req, res, next) => {
+  req.root = await mongo;
   next();
 });
 
+const index = require('./routes/index');
+const used = require('./routes/users');
+
+app.use(logger('dev'));
+app.use(bodyParser.json());
+// express.json([options]) - this to replace the above...maybe
+// app.use(express.static(root, [options])) - could be used to display pages if there is an error or broken graphql API
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(session({
   genid: (req) => {
-    console.log('Inside the session middleware')
+    console.log('Inside the session middleware',req.query)
     console.log(req.sessionID)
     return uuid(); // use UUIDs for session IDs
   },
-  secret: 'keyboard cat',
+  secret: 'keyboard cat', // change to random gen string from .env
   store: new MongoStore({
     url: 'mongodb://localhost:27017/sessions',
     autoRemove: 'native',
     touchAfter: 24 * 3600
       }),
   resave: false,
-  saveUninitialized: true
-}))
+  saveUninitialized: true,
+  cookie: {
+    secure: false,
+    // sameSite: 'lax',
+  },
+}));
 
 
 app.use('/', index);
-app.use('/users', users);
-// TODO - need to fix the mongo db connector to show errors
-// TODO - look into how to close the db Loc 752
-app.use('/graphql', cors());
-app.use('/graphql', (req, res, next) => {
-  console.log('req.sessionID', req.sessionID);
+app.use('/users', used);
+
+app.use((req, res, next) => {
+  console.log('inside 1st graphiql path');
+  console.log('sessionID', req.sessionID);
+  console.log('this is req body', req.body);
 
   next();
-}, graphqlHTTP({
-  schema,
-  graphiql: true,
-}));
+})
+app.use(authMiddleware);
+app.use('/graphql', cors(), graphqlMiddleware);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
