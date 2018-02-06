@@ -139,16 +139,16 @@ The contenders for authentication are:
   - Rate limiting: [express-brute](https://github.com/AdamPflug/express-brute) to prevent slowing down of server by multiple password requests from the same IP address.
   - API token mechanism: [JWT](https://jwt.io/introduction/) - this could be used for sessions because each subsequent request will include the JWT and once it doesn't include that or the correct one then the session will expire. A button can be created to delete that JWT therefore cancelling the session. EXCEPT it uses cookie tokens.
     - ATTRIBUTES:
-      - Stateless - the user state is never stored in server memory.
+      - Stateless - the user state is never stored in server memory.f
       - Local - the JWT is stored locally.
   - Encryption - the PW needs to be adequately encrypted and decrypt. Use [bcrypt](https://www.npmjs.com/package/bcrypt)
-  - Sessions - [express-sessions](https://github.com/expressjs/session)
+    - There is [no need to hash the pw](https://stackoverflow.com/questions/7562675/proper-way-to-send-username-and-password-from-client-to-server) in the client as using a decent SSL cert will take care of that.
+  - Sessions - [express-sessions](https://github.com/expressjs/session) - life-cycle of user using the application. Times out after certain period of time.
     - [uudi](https://github.com/kelektiv/node-uuid) - used to produce a cryptographically secure UUID (universally unique identifier) for use as a cookie.
-    [connect-mongo](https://github.com/jdesboeufs/connect-mongo) - this is to save sessions in a mongo database.
+    - [connect-mongo](https://github.com/jdesboeufs/connect-mongo) - this is to save sessions in a mongo database.
   - Confirmation - of sign-up via email.
   - Recoverable - of password via email. Here's a tutorial for it: [Password Reset](https://www.codementor.io/olatundegaruba/password-reset-using-jwt-ag2pmlck0). This token should time out after certain period of time.
   - Registrable - of the account. I already have this feature with the graphQL stuff.
-  - Rememberable - life-cycle of user using the application. Times out after certain period of time.
   - Trackable? - sign in count, timestamp, IP address.
   - Lockable? - freeze account after certain number of failed sign-ins.
   - Validateable - validate email and password.
@@ -238,6 +238,14 @@ Help with getting it running: https://stackoverflow.com/questions/37096517/mongo
 - [Secure JS Applications](https://www.youtube.com/watch?v=BeKMbTSm7x8)
 
 
+## MARKDOWN
+
+- [Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+
+## RESTful APIs
+
+- The [`options`](http://zacstewart.com/2012/04/14/http-options-method.html) header is used to find out what HTTP methods are accepted by the server.
+- The [`204 No Content`](https://benramsey.com/blog/2008/05/http-status-204-no-content-and-205-reset-content/) response is used to indicate a successful request was processed but there is no content in the body. This could be the case for deleting a persisted object or perhaps for signing out a user.
 # ERRORS
 
 ### NPM - cannot read property of undefined: [Solution](https://github.com/npm/npm/issues/18042)
@@ -263,3 +271,28 @@ Help with getting it running: https://stackoverflow.com/questions/37096517/mongo
 - [SPA](https://en.wikipedia.org/wiki/Single-page_application) - an website or web application that dynamically reloads content on one page instead of loading new pages for different content. All the required code is load on first load and no page reload happens.
 
 - [Serialization](https://en.wikipedia.org/wiki/Serialization) - this is when a data structure is transformed into a format that can be persisted or transmitted across a network.
+
+## HTTP Request Headers
+
+- **Accept** - this indicates to the server what content the client can accept. Usually, a number of different content type is sent and the server will choose which to respond with and make it know to the client in the response with `Content-Type` header. This header will list different types depending on what is requested such as image o video
+- **Accept-Encoding** - this is the type of compression algorithm the client can accept. It's responded with `Content-Encoding`
+- **Accept-Language** - this lets the server know what language the client can accept.
+- **Access-Control-Request-Headers** - this used for preflight request (a request before the actual request to check if the CORS protocol is understood) to let the server know what HTTP headers will be used on the actual request.
+- **Access-Control-Request-Method** - same as above but to let the server know what HTTP method will be used.
+- **Connection** - this lets the server know if it'll keep the network connection open after the current transaction has finished. `keep-alive` lets the server know to allow subsequent requests to the same server.
+- **DNT** - this is the Do Not Track header, letting the server know if the client wants privacy or personalised content.
+- **Host** - this is the domain name of the server and (optionally) the port.
+- **Origin** - this indicates the domain origin of the fetch request
+- **User-Agent** - this is information about the requesting OS, application type, software vendor and version.
+
+## Response Headers
+
+- **Access-Control-Allow-Headers** - what headers can be used during the actual request.
+- **Access-Control-Allow-Method** - the response to **Access-Control-Request-Method** to indicate to the client what HTTP methods are allowed.
+- **Access-Control-Allow-Origin** - indicates if the response can be shared with the given origin. `*` is wildcard and means can be shared with any origin.
+- **Content-Length** - indicates the size of the entity-body send to the client.
+- **Content-Encoding** - lets the client know what compression algorithm was used on the body, if any.
+- **Content-Type** - This lets the client know the media type of the resource. Browsers may MIME sniff and not follow the header. This can be turned off by `X-Content-Type-Options: nosniff`
+- **Set-Cookie** - This is used to send cookies to the client.
+- **Vary** - something about future headers and whether a cached response can be used rather than requesting a fresh one.
+- **X-Powered-By** - this is a non-standard header and indicates the technology used by the application.

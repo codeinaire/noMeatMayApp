@@ -8,12 +8,14 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const authMiddleware = require('./middlewares/authentication');
 const graphqlMiddleware = require('./middlewares/graphql');
+const signUpMiddleware = require('./middlewares/signUp');
 const connectMongo = require('./database/mongoConnector');
 
 const mongo = connectMongo();
 const app = express();
 // Add mongo connector to req object to make req & connector available in graphQl middleware
 app.use(async (req, res, next) => {
+  console.log('connecting mongo db');
   req.root = await mongo;
   next();
 });
@@ -30,7 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
   genid: (req) => {
-    console.log('Inside the session middleware',req.query)
+    console.log('Inside the session middleware',req.body)
     console.log(req.sessionID)
     return uuid(); // use UUIDs for session IDs
   },
@@ -59,8 +61,10 @@ app.use((req, res, next) => {
 
   next();
 })
-app.use(authMiddleware);
-app.use('/graphql', cors(), graphqlMiddleware);
+
+app.use('/signup', cors(), signUpMiddleware)
+
+app.use('/graphql', authMiddleware, cors(), graphqlMiddleware);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
