@@ -30,5 +30,4 @@ passport.serializeUser((user, done) => {
 const middleware = express();
 middleware.use(passport.initialize());
 middleware.use(passport.session());
-console.log('%%%%% does it stop here?', middleware)
 module.exports = middleware;

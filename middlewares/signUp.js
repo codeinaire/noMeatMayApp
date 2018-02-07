@@ -1,27 +1,25 @@
 const bcrypt = require('bcrypt');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   const saltRounds = 10;
-  // have to validate to see if the user already exists?
   bcrypt.hash(req.body.password, saltRounds)
   .then(async(hashedPassword) => {
     const usersDb = req.root.Users;
-    let returnDb;
     try {
-      returnDb = await usersDb.insert({
-        username: req.body.username,
+      await usersDb.insert({
+        username: null,
+        email: req.body.email,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         password: hashedPassword,
         motivation: req.body.motivation,
       })
     } catch (error) {
-      console.error(`The error is ${error}`);
+      console.error(`The error is ${JSON.stringify(error)}`);
+      res.status(409).send('Email already exists')
     }
-    console.log('this is hash', returnDb);
   }).
   catch((err) => {
     console.error(`The error is: ${err}`);
   });
-  res.send('yay, this be working')
 }

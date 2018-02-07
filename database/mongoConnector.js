@@ -12,6 +12,7 @@ module.exports = async () => {
     reconnectTries: Number.MAX_VALUE,
     reconnectInterval: 1000
   })
+  db.collection('users').createIndex({ "email": 1 }, { unique: true });
   console.log(`Now connected to ${db.databaseName} database`);
   return { Users: db.collection('users'), }
 }
