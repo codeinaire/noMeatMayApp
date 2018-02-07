@@ -1,29 +1,70 @@
 const express = require('express');
-const path = require('path');
-const favicon = require('serve-favicon');
 const logger = require('morgan');
-const cookieParser = require('cookie-parser');
+const path = require('path');
+const cors = require('cors');
 const bodyParser = require('body-parser');
+const uuid = require('uuid/v4');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const authMiddleware = require('./middlewares/authentication');
+const graphqlMiddleware = require('./middlewares/graphql');
+const signUpMiddleware = require('./middlewares/signUp');
+const connectMongo = require('./database/mongoConnector');
+
+const mongo = connectMongo();
+const app = express();
+// Add mongo connector to req object to make req & connector available in graphQl middleware
+app.use(async (req, res, next) => {
+  console.log('connecting mongo db');
+  req.root = await mongo;
+  next();
+});
 
 const index = require('./routes/index');
-const users = require('./routes/users');
+const used = require('./routes/users');
 
-const app = express();
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+// express.json([options]) - this to replace the above...maybe
+// app.use(express.static(root, [options])) - could be used to display pages if there is an error or broken graphql API
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  genid: (req) => {
+    console.log('Inside the session middleware',req.body)
+    console.log(req.sessionID)
+    return uuid(); // use UUIDs for session IDs
+  },
+  secret: 'keyboard cat', // change to random gen string from .env
+  store: new MongoStore({
+    url: 'mongodb://localhost:27017/sessions',
+    autoRemove: 'native',
+    touchAfter: 24 * 3600
+      }),
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    secure: false,
+    // sameSite: 'lax',
+  },
+}));
+
+
 app.use('/', index);
-app.use('/users', users);
+app.use('/users', used);
+
+app.use((req, res, next) => {
+  console.log('inside 1st graphiql path');
+  console.log('sessionID', req.sessionID);
+  console.log('this is req body', req.body);
+
+  next();
+})
+
+app.use('/signup', cors(), signUpMiddleware)
+
+app.use('/graphql', authMiddleware, cors(), graphqlMiddleware);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -40,7 +81,10 @@ app.use((err, req, res, next) => {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json({
+    message: err.message,
+    error: err,
+  });
 });
 
 module.exports = app;

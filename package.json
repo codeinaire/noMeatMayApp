@@ -1,6 +1,9 @@
 {
   "name": "nmmexpressserver",
   "version": "0.0.0",
+  "engines": {
+    "node": ">=8.7"
+  },
   "description": "A server for the No Meat May application.",
   "main": "app.js",
   "private": true,
@@ -19,22 +22,31 @@
   },
   "homepage": "https://github.com/codeinaire/noMeatMayApp#readme",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "body-parser": "~1.17.1",
-    "cookie-parser": "~1.4.3",
+    "connect-mongo": "^2.0.1",
+    "cors": "^2.8.4",
     "debug": "~2.6.3",
     "express": "~4.15.2",
-    "jade": "*",
+    "express-graphql": "^0.6.11",
+    "express-session": "^1.15.6",
+    "graphql": "^0.11.7",
+    "install": "^0.10.4",
+    "mongodb": "^2.2.34",
     "morgan": "~1.8.1",
-    "serve-favicon": "~2.4.2",
-    "styled-components": "^2.1.2"
+    "npm": "^5.6.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
     "chai": "*",
-    "eslint": "^4.5.0",
-    "eslint-config-airbnb-base": "^11.3.1",
-    "eslint-plugin-import": "^2.7.0",
-    "mocha": "*",
-    "nodemon": "*",
-    "sinon": "*"
+    "eslint": "^4.15.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "mocha": "^4.1.0",
+    "nodemon": "^1.14.8",
+    "sinon": "^4.1.3"
   }
 }
