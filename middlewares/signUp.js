@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 
-module.exports = async (req, res, next) => {
+module.exports = (req, res) => {
   const saltRounds = 10;
   bcrypt.hash(req.body.password, saltRounds)
   .then(async(hashedPassword) => {
@@ -21,5 +21,7 @@ module.exports = async (req, res, next) => {
   }).
   catch((err) => {
     console.error(`The error is: ${err}`);
+    res.status(500).send(`The error is: ${err}`)
   });
+  res.status(200).send('Successfully signed up for No Meat May!')
 }

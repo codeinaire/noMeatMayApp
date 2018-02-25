@@ -28,14 +28,15 @@ module.exports = graphqlHTTP((req, res) => {
         if (req.body.operationName !== 'submitSignupDetails') {
         console.log('1) inside graphqlHTTP');
         passport.authenticate('local', (err, user, info) => {
-          console.log('3) Inside passport.authenticate() callback');
-          console.log('user', user.username);
+          console.log('2) Inside passport.authenticate() callback');
+          console.log('email', user.email);
           req.login(user, (err) => {
-            console.log('4) &&&&&&&&Inside req.login() callback', user.username)
+            console.log('5) &&&&&&&&Inside req.login() callback', user.email)
             console.log(`req.session: ${JSON.stringify(req.session.passport)}`)
             console.log(`req.user: ${JSON.stringify(req.user)}`);
             if(err) {
               console.error(`An error occured: ${err}`);
+              return res.status(511).send(`An error occured: ${err}`)
             }
             next(user);
           })

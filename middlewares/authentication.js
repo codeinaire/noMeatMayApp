@@ -1,4 +1,5 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const connectMongo = require('../database/mongoConnector');
@@ -6,24 +7,29 @@ const connectMongo = require('../database/mongoConnector');
 const mongo = connectMongo();
 
 passport.use(new LocalStrategy({
-  usernameField: 'variables[username]',
+  usernameField: 'variables[email]',
   passwordField: 'variables[password]'
-}, async (username, password, done) => {
+}, async (email, password, done) => {
     const db = await mongo;
     const Users = db.Users;
     try {
-      const user = await Users.findOne({ username });
-      if(username === user.username && password === user.password) {
-        console.log('2) return true for user in auth file', user.username);
+      const user = await Users.findOne({ 'email': email });
+      const passwordCheck = await bcrypt.compare(password, user.password)
+
+      if(email === user.email && passwordCheck) {
+        console.log('2) return true for user in auth file', user.email);
         return done(null, user)
+      } else {
+        return done(null, false);
       }
+      console.log("after if statement");
     } catch (error) {
       console.error(`An error occured: ${error}`);
     }
 }));
 
 passport.serializeUser((user, done) => {
-  console.log('4) inside serializeUser', user.username);
+  console.log('4) inside serializeUser', user.email);
   done(null, user._id);
 });
 

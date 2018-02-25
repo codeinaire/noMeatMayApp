@@ -196,6 +196,7 @@ Help with getting it running: https://stackoverflow.com/questions/37096517/mongo
 - Commands:
   - START: sudo service mongodb start
   - STOP: sudo service mongodb stop
+    - [This](https://askubuntu.com/questions/677066/how-can-i-stop-mongodb-from-starting-on-system-boot#677108) is how to stop MongoDB from starting on bootup.
   - STATUS: sudo service mongodb status
   - This is how to check out the log: `/var/log/mongodb/mongod.log`, I opened it up it nano
 
