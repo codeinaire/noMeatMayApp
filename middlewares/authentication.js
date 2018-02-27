@@ -5,6 +5,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const connectMongo = require('../database/mongoConnector');
 
 const mongo = connectMongo();
+const middleware = express();
+
 
 passport.use(new LocalStrategy({
   usernameField: 'variables[email]',
@@ -22,9 +24,9 @@ passport.use(new LocalStrategy({
       } else {
         return done(null, false);
       }
-      console.log("after if statement");
-    } catch (error) {
-      console.error(`An error occured: ${error}`);
+    } catch (err) {
+      console.error(`An error occured: ${err}`);
+      return done(null, false, { message: err});
     }
 }));
 
@@ -33,7 +35,6 @@ passport.serializeUser((user, done) => {
   done(null, user._id);
 });
 
-const middleware = express();
 middleware.use(passport.initialize());
 middleware.use(passport.session());
 module.exports = middleware;
