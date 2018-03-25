@@ -12,6 +12,7 @@
     ],
     "plugins": ["node"],
     "rules": {
-        "node/exports-style": ["error", "module.exports"]
+      "node/exports-style": ["error", "module.exports"],
+      "no-console": ["error", { allow: ["warn", "error"] }],
     }
 }

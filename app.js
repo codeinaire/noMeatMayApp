@@ -36,6 +36,8 @@ app.use(session({
     console.log(req.sessionID)
     return uuid(); // use UUIDs for session IDs
   },
+  name: 'noMeatMay',
+  proxy: true,
   secret: 'keyboard cat', // change to random gen string from .env
   store: new MongoStore({
     url: 'mongodb://localhost:27017/sessions',
@@ -62,7 +64,11 @@ app.use((req, res, next) => {
   next();
 })
 
-app.use('/signup', cors(), signUpMiddleware)
+var corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true // <-- REQUIRED backend setting
+};
+app.use('/signup', cors(corsOptions), signUpMiddleware)
 
 app.use('/graphql', authMiddleware, cors(), graphqlMiddleware);
 

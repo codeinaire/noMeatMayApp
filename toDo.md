@@ -1,0 +1,30 @@
+# Authentication
+- Sign-up
+  - Sign-up confirmation email, none for OAuth (?)
+- OAuth - Facebook & Instagram
+  - FRONTEND - different button for authentication systems but same input
+- Password reset function
+  - Mailers or JWT token reset
+  - FRONTEND - password forget link
+- Sign-out
+  - Sessions cancellation
+  - FRONTEND - sign-out link/button
+- Profile page
+  - Redirect to sign-up data to profile page
+  - FRONTEND - profile page
+  - CRUD profile page functions
+- Sign-in page
+  - Redirect to user dashboard
+- Dashboard
+  - CRUD dashboard, resolver to send data to all dashborad elements at once
+  - FRONTEND - dashboard
+    - Populated by...
+      - article to read in the center & share article
+        - API to vegan articles
+      - current points in the top
+        - number of points per article
+      - Way to get all the current posts from all users of the PWA and posted in the dashboard??
+      - Photo upload?? & share to social media
+- Authorization
+  - Make sure only users can see their own dashboard
+  - public element in dashboard shows the items being shared

@@ -9,7 +9,8 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test": "mocha **/*.test.js"
+    "test": "mocha **/*.test.js, **/*/*.test.js",
+    "test-watch": "nodemon --exec \"npm test\""
   },
   "repository": {
     "type": "git",
@@ -46,7 +47,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^5.2.1",
     "mocha": "^4.1.0",
-    "nodemon": "^1.14.8",
+    "nodemon": "^1.17.2",
     "sinon": "^4.1.3"
   }
 }
