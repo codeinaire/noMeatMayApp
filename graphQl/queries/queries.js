@@ -4,7 +4,7 @@ const {
   GraphQLObjectType,
   GraphQLString,
 } = require('graphql');
-const UserType = require('../types/index');
+const { UserType } = require('../types');
 const Resolvers = require('../resolvers');
 
 module.exports = new GraphQLObjectType({

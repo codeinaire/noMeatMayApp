@@ -21,8 +21,6 @@ passport.use(new LocalStrategy({
       if(email === user.email && passwordCheck) {
         console.log('2) return true for user in auth file', user.email);
         return done(null, user)
-      } else {
-        return done(null, false);
       }
     } catch (err) {
       console.error(`An error occured: ${err}`);

@@ -26,6 +26,7 @@ module.exports = graphqlHTTP((req, res) => {
          * but never block the call from here.
          */
       console.log('1) inside graphqlHTTP');
+      
       passport.authenticate('local', (err, user, info) => {
         console.log('2) Inside passport.authenticate() callback');
         console.log('email', user.email);
