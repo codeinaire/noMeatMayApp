@@ -61,10 +61,13 @@ app.use((req, res, next) => {
 
   next();
 })
-
+var corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true // <-- REQUIRED backend setting
+};
 app.use('/signup', cors(), signUpMiddleware)
 
-app.use('/graphql', authMiddleware, cors(), graphqlMiddleware);
+app.use('/graphql', authMiddleware, cors(corsOptions), graphqlMiddleware);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

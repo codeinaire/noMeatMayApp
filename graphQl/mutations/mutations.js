@@ -41,7 +41,7 @@ module.exports = new GraphQLObjectType({
     signInUser: {
       type: UserType,
       args: {
-        username: {
+        email: {
           type: new GraphQLNonNull(GraphQLString),
         },
         password: {
