@@ -8,7 +8,7 @@ module.exports = new GraphQLObjectType({
   name: 'UserType',
   description: 'This is created when a user signs up. It is used to login and represent them on the service.',
 
-  fields: () => ({
+  fields: {
     id: {
       type: GraphQLID,
       description: 'This is the id of the user created by the database.',
@@ -37,5 +37,5 @@ module.exports = new GraphQLObjectType({
       type: GraphQLString,
       description: 'The reason why they are joining the no meat may campaign',
     },
-  }),
+  },
 });

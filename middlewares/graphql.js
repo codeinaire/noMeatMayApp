@@ -1,6 +1,6 @@
 const passport = require('passport');
 const graphqlHTTP = require('express-graphql');
-const schema = require('./../graphQl/schema');
+const schema = require('../graphQl/schema');
 
 module.exports = graphqlHTTP((req, res) => {
   console.log('req body in graphqlHTTP', req.body.operationName);
@@ -26,7 +26,7 @@ module.exports = graphqlHTTP((req, res) => {
          * but never block the call from here.
          */
       console.log('1) inside graphqlHTTP');
-      
+
       passport.authenticate('local', (err, user, info) => {
         console.log('2) Inside passport.authenticate() callback');
         console.log('email', user.email);

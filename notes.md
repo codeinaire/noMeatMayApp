@@ -247,7 +247,13 @@ Help with getting it running: https://stackoverflow.com/questions/37096517/mongo
 
 - The [`options`](http://zacstewart.com/2012/04/14/http-options-method.html) header is used to find out what HTTP methods are accepted by the server.
 - The [`204 No Content`](https://benramsey.com/blog/2008/05/http-status-204-no-content-and-205-reset-content/) response is used to indicate a successful request was processed but there is no content in the body. This could be the case for deleting a persisted object or perhaps for signing out a user.
-# ERRORS
+
+# PROBLEM
+
+### GraphQl problems - When signing in I get the error `schema is not configured for mutations`. I've a feeling it has something to do with the refactoring I did...
+
+
+# SOLUTIONS
 
 ### NPM - cannot read property of undefined: [Solution](https://github.com/npm/npm/issues/18042)
 

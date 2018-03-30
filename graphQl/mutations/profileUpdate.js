@@ -13,7 +13,7 @@ module.exports = new GraphQLObjectType({
     profileUpdate: {
       type: ProfileType,
       args: {
-        photo: {
+        badges: {
           type: GraphQLString,
         },
         bio: {
@@ -22,14 +22,21 @@ module.exports = new GraphQLObjectType({
         motivation: {
           type: new GraphQLNonNull(GraphQLString),
         },
-        badges: {
+        firstname: {
+          type: GraphQLString
+        },
+        lastname: {
+          type: GraphQLString
+        },
+        photo: {
           type: GraphQLString,
         },
       },
       resolve: (root, args, context) => {
         console.log('6) this is context in graphQl', context.req.user);
         return {
-          photo: 'this is photo',
+          firstname: 'this is photo',
+          lastname: 'this is last name',
           bio: 'this is bio',
           motivation: 'this is motivation',
           badges: 'this is badges'

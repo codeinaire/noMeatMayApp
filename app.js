@@ -70,7 +70,7 @@ var corsOptions = {
 };
 app.use('/signup', cors(corsOptions), signUpMiddleware)
 
-app.use('/graphql', authMiddleware, cors(), graphqlMiddleware);
+app.use('/graphql', authMiddleware, cors(corsOptions), graphqlMiddleware);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
