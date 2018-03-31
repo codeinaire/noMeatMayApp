@@ -250,10 +250,11 @@ Help with getting it running: https://stackoverflow.com/questions/37096517/mongo
 
 # PROBLEM
 
-### GraphQl problems - When signing in I get the error `schema is not configured for mutations`. I've a feeling it has something to do with the refactoring I did...
-
 
 # SOLUTIONS
+
+### GraphQl problems (31/04/18) - When signing in I get the error `schema is not configured for mutations`. I've a feeling it has something to do with the refactoring I did...
+  - __SOLUTION__ - thu mutations and query object need to be a root object then the mutations come from that. This was made clear by [these documents](http://graphql.org/graphql-js/type/#graphqlschema). Following the types outlined here helped me and the reference implementation that I d/l points out `A Schema is created by supplying the root types of each type of operation, query and mutation (optional)`.
 
 ### NPM - cannot read property of undefined: [Solution](https://github.com/npm/npm/issues/18042)
 
