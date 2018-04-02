@@ -18,12 +18,6 @@ module.exports = {
       motivation: {
         type: new GraphQLNonNull(GraphQLString),
       },
-      firstname: {
-        type: GraphQLString
-      },
-      lastname: {
-        type: GraphQLString
-      },
       photo: {
         type: GraphQLString,
       },
@@ -31,12 +25,8 @@ module.exports = {
     resolve: (root, args, context) => {
       console.log('6) this is context in graphQl', context.req.user);
       return {
-        firstname: 'this is photo',
-        lastname: 'this is last name',
         bio: 'this is bio',
         motivation: 'this is motivation',
-        badges: 'this is badges'
-
       };
     }
   }

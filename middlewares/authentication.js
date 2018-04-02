@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const { ObjectID } =  require('mongodb')
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const connectMongo = require('../database/mongoConnector');
@@ -31,6 +32,22 @@ passport.use(new LocalStrategy({
 passport.serializeUser((user, done) => {
   console.log('4) inside serializeUser', user.email);
   done(null, user._id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  console.log('inside deserializeUser', id);
+  const db = await mongo;
+  const Users = db.Users;
+  try {
+    const user = await Users.findOne({ '_id': ObjectID(id) });
+    
+    if(id === ObjectID(user._id).toString()) {
+      return done(null, user)
+    }
+  } catch (err) {
+    console.error(`An error occured: ${err}`);
+    return done(null, false, { message: err});
+  }
 });
 
 middleware.use(passport.initialize());

@@ -20,9 +20,6 @@ app.use(async (req, res, next) => {
   next();
 });
 
-const index = require('./routes/index');
-const used = require('./routes/users');
-
 app.use(logger('dev'));
 app.use(bodyParser.json());
 // express.json([options]) - this to replace the above...maybe
@@ -30,7 +27,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({
+app.use('/graphql', session({
+  cookie: {
+    secure: false,
+    // sameSite: 'lax',
+  },
   genid: (req) => {
     console.log('Inside the session middleware',req.body)
     console.log(req.sessionID)
@@ -38,31 +39,15 @@ app.use(session({
   },
   name: 'noMeatMay',
   proxy: true,
+  resave: false,
+  saveUninitialized: true,
   secret: 'keyboard cat', // change to random gen string from .env
   store: new MongoStore({
     url: 'mongodb://localhost:27017/sessions',
     autoRemove: 'native',
     touchAfter: 24 * 3600
       }),
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    secure: false,
-    // sameSite: 'lax',
-  },
 }));
-
-
-app.use('/', index);
-app.use('/users', used);
-
-app.use((req, res, next) => {
-  console.log('inside 1st graphiql path');
-  console.log('sessionID', req.sessionID);
-  console.log('this is req body', req.body);
-
-  next();
-})
 
 var corsOptions = {
   origin: 'http://localhost:3000',

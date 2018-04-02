@@ -20,7 +20,7 @@ module.exports = {
       },
     },
     resolve: (root, args, context) => {
-      console.log('6) this is context in graphQl', context.req.user);
+      console.log('6) this user in signInUser', context.req.user);
       return {
         username: context.req.user.username
       };
