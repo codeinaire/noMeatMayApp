@@ -1,5 +1,29 @@
 CODE FOR USE LATER?
 
+__THIS GOES IN profileUpdate__
+`firstname: {
+  type: GraphQLString
+},
+lastname: {
+  type: GraphQLString
+},
+`
+Local strategy returned true
+Inside passport.authenticate() callback
+user { id: '2f24vvg', username: 'test', password: 'password' }
+Inside serializeUser callback. User id is save to the session file store here
+&&&&&&&&Inside req.login() callback { id: '2f24vvg', username: 'test', password: 'password' }
+req.session: {"user":"2f24vvg"}
+req.user: {"id":"2f24vvg","username":"test","password":"password"}
+inside graphql { id: '2f24vvg', username: 'test', password: 'password' }
+this is query { operationName: 'signInUser',
+  variables: { username: 'test', password: 'password' },
+  query: 'mutation signInUser($username: String!, $password: String!) {\n  signInUser(username: $username, password: $password) {\n    username\n    firstname\n    lastname\n    motivation\n    __typename\n  }\n}\n' }
+this is context undefined
+POST /graphql 200 25.281 ms - 118
+
+
+
 - mongo connector to search for user
 
 // const passport = require('passport');

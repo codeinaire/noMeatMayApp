@@ -48,14 +48,25 @@ app.use('/graphql', session({
     touchAfter: 24 * 3600
       }),
 }));
-
-var corsOptions = {
+const corsOptions = {
   origin: 'http://localhost:3000',
   credentials: true // <-- REQUIRED backend setting
 };
-app.use('/signup', cors(corsOptions), signUpMiddleware)
 
-app.use('/graphql', authMiddleware, cors(corsOptions), graphqlMiddleware);
+app.get('/signout', cors(corsOptions), (req, res) => {
+  console.log('inside sign out');
+  req.logout();
+  res.send('You successfully signed out!');
+});
+app.use('/signup',
+  cors(corsOptions),
+  signUpMiddleware
+);
+app.use('/graphql',
+  authMiddleware,
+  cors(corsOptions),
+  graphqlMiddleware
+);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
