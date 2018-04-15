@@ -23,10 +23,10 @@ module.exports = {
       },
     },
     resolve: (root, args, context) => {
-      console.log('6) this is context in graphQl', context.req.user);
+      console.log('6) this is context in graphQl profileupdate', context.req.user);
       return {
-        bio: 'this is bio',
-        motivation: 'this is motivation',
+        bio: 'this is bio in profileUpdate',
+        motivation: 'this is motivation in profileUpdate',
       };
     }
   }

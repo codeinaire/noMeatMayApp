@@ -29,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/graphql', session({
   cookie: {
+    httpOnly: false,
     secure: false,
     // sameSite: 'lax',
   },
@@ -54,8 +55,9 @@ const corsOptions = {
 };
 
 app.get('/signout', cors(corsOptions), (req, res) => {
-  console.log('inside sign out');
+  console.log('inside sign out', req);
   req.logout();
+  console.log('after log out', req.user);
   res.send('You successfully signed out!');
 });
 app.use('/signup',
