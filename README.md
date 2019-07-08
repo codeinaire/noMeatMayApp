@@ -3,7 +3,7 @@
 [GraphQl github Proper](https://github.com/facebook/graphql)
 
 [GraphQl Facebook](https://github.com/facebook/graphql)
-[GraphQl Spec](http://facebook.github.io/graphql/October2016/#sec-Language.Query-Document) - this is mainly for developers who want to build tools that help with using GraphQl.
+[GraphQl Spec](http://facebook.github.io/graphql/October2016/#sec-Language.Query-Document) - this is mainly for developers who want to build tools that help with using GraphQl. Looks interesting.
 
 [GrapQL-js](https://github.com/graphql/graphql-js)
 
