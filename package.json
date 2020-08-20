@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/codeinaire/noMeatMayApp#readme",
   "dependencies": {
-    "bcrypt": "^1.0.3",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.18.3",
     "connect-mongo": "^2.0.1",
     "cors": "^2.8.4",
