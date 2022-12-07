@@ -28,7 +28,7 @@
     "connect-mongo": "^2.0.1",
     "cors": "^2.8.4",
     "debug": "~2.6.3",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-graphql": "^0.6.11",
     "express-session": "^1.15.6",
     "graphql": "^0.11.7",
